@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<!-- board, member model을 모두 읽는다. -->
+	<!-- util과 aop도 읽는다. -->
+	<context:component-scan base-package="com.ssafy.*.model, com.ssafy.util, com.ssafy.board.aop"></context:component-scan>
+	
+	<!-- aspect 설정 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	
+	<!-- DataSource 설정 -->
+	<bean id="ds" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<!-- property는 setDriverClass -> driverClass라고 한다. -->
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>
+		<!-- & -> &amp; 로 고쳐야 컴파일 에러가 발생하지 않는다. -->
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/ssafyweb?serverTimezone=UTC&amp;useUniCode=yes&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+	
+</beans>
