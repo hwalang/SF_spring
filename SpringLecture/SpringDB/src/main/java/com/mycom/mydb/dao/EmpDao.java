@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mycom.mydb.dto.EmpDto;
 
+
 public interface EmpDao {
 
 	EmpDto empDetail(int employeeId);		// 사원 상세

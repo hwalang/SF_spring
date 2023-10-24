@@ -86,8 +86,8 @@ public class UserDaoImpl implements UserDao {
 		
 		try {
 			StringBuilder sb = new StringBuilder();
-			sb.append("select * ");
-			sb.append("from users where userEmail = ? ");
+			sb.append("select *  ");
+			sb.append(" from users where userEmail = ? ");
 			
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(sb.toString());
@@ -99,10 +99,10 @@ public class UserDaoImpl implements UserDao {
 			if (rs.next()) {
 
 				userDto = new UserDto();
-				userDto.setUserEmail("userEmail");
-				userDto.setUserNm("userNm");
-				userDto.setUserPhone("userPhone");
-				userDto.setUserProfile("userProfile");
+				userDto.setUserEmail(rs.getString("userEmail"));
+				userDto.setUserNm(rs.getString("userNm"));
+				userDto.setUserPhone(rs.getString("userPhone"));
+				userDto.setUserProfile(rs.getString("userProfile"));
 			}
 			
 		} catch (Exception e) {
