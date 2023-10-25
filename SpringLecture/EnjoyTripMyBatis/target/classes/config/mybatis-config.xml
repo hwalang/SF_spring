@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- config 3.0 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>		<!-- 전통적인 데이터베이스 칼럼명 형태인 A_COLUMN을 CamelCase형태의 자바 프로퍼티명 형태인 aColumn으로 자동으로 매핑하도록 함 => resultMap 할 필요 X -->
+		<setting name="callSettersOnNulls" value="true"/>	<!-- DB에서 가져온 값이 null이더라도 setter를 호출할지 지정. 참고: int, boolean 등과 같은 원시타입은 null을 설정할 수 없다 -->
+	</settings>
+
+</configuration>

@@ -159,7 +159,7 @@ public class StudentDaoImpl implements StudentDao {
         
         try {
             StringBuilder sb = new StringBuilder();
-            sb.append("update student set student_nm=?, email=?, phone=?");
+            sb.append("update student set student_nm=?, email=?, phone=? ");
             sb.append(" where student_id = ? ");
             
             con = dataSource.getConnection();
