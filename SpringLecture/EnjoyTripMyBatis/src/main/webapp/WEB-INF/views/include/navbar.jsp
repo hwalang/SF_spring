@@ -39,7 +39,7 @@
                 <%--
                 if (loginUser == null) {
                 --%>
-                <li><a href="login.jsp">Sign In</a></li>
+                <li><a href="/enjoytrip/login">Sign In</a></li>
                 <%--
                 } else {
                 --%>

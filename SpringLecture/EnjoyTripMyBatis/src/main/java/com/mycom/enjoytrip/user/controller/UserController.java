@@ -1,5 +1,8 @@
 package com.mycom.enjoytrip.user.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,7 +49,16 @@ public class UserController {
 		return dto;
 	}
 	
-	
+	@PostMapping("/login")
+	@ResponseBody
+	public UserDto userLogin(String userEmail, String userPwd) {
+		Map<String, String> map = new HashMap<>();
+		map.put("userEmail", userEmail);
+		map.put("userPwd", userPwd);
+		UserDto dto = userService.userLogin(userEmail, userPwd);
+		System.out.println(dto);
+		return dto;
+	}
 	
 	
 	

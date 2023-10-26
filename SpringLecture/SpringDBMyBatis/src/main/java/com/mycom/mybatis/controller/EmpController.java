@@ -1,6 +1,8 @@
 package com.mycom.mybatis.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -103,4 +105,40 @@ public class EmpController {
 		List<EmpDto> list = service.empListResultMap(searchWord);
 		return list;
 	}
+
+	// 사원 목록 - param: Map
+	@GetMapping(value = "/empListParameterMap")
+	@ResponseBody
+	public List<EmpDto> empListParameterMap(String firstName, String lastName) {
+		Map<String, String> map = new HashMap<>();
+		map.put("firstName", firstName);
+		map.put("lastName", lastName);
+		List<EmpDto> list = service.empListParameterMap(map);
+		return list;
+	}
+
+	// 사원 목록 - @param
+	@GetMapping(value = "/empListParameterMap2")
+	@ResponseBody
+	public List<EmpDto> empListParameterMap2(String firstName, String lastName) {
+		List<EmpDto> list = service.empListParameterMap2(firstName, lastName);
+		return list;
+	}
+
+	// 사원 목록 - param: Dto
+	@GetMapping(value = "/empListParameterMap3")
+	@ResponseBody
+	public List<EmpDto> empListParameterMap3(EmpDto dto) {
+		List<EmpDto> list = service.empListParameterMap3(dto);
+		return list;
+	}
+	
+	
+	@GetMapping(value = "/empListWhereIf")
+	@ResponseBody
+	public List<EmpDto> empListWhereIf(String firstName, String lastName, String email) {
+		List<EmpDto> list = service.empListWhereIf(firstName, lastName, email);
+		return list;
+	}
+
 }

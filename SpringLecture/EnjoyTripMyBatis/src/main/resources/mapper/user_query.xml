@@ -26,5 +26,15 @@
 	<delete id="userDelete" parameterType="int">
 		delete from users where userId = #{userId}
 	</delete>
+	
+	
+    <!-- Login -->
+    <select id="userLogin" parameterType="string" resultType="com.mycom.enjoytrip.user.dto.UserDto">
+        select *
+          from users
+         where userEmail = #{userEmail} and userPwd = #{userPwd}
+    </select>
+    
+    
 
 </mapper>

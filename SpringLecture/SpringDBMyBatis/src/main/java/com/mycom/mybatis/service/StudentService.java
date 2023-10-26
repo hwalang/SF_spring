@@ -12,4 +12,5 @@ public interface StudentService {
 	int studentUpdate(StudentDto dto);				// 학생 수정
 	int studentDelete(int studentId);				// 학생 삭제
 	
+	
 }

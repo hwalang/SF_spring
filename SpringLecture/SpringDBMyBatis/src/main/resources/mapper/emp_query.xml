@@ -40,6 +40,8 @@
 		where first_name like CONCAT('%',#{searchWord})
 	</select>
 	
+	
+	
 	<!-- ResultMap -->
 	<resultMap type="com.mycom.mybatis.dto.EmpDto" id="empMap">
 		<result property="employeeId" column="employeeId"></result>
@@ -48,13 +50,6 @@
 		<result property="email" column="email"></result>
 		<result property="hireDate" column="hiredate"></result>
 	</resultMap>
-	<!-- 
-	<select id="empListResultMap" parameterType="string" resultMap="empMap">
-		select employeeId, first_name, last_name, email, hiredate 
-		from emp 
-		where first_name like CONCAT('%', #{searchWord}, '%')
-	</select>
-	 -->
 	
 	<!-- ResultMap2 -->
 	<resultMap type="com.mycom.mybatis.dto.EmpDto2" id="empMap2">
@@ -62,10 +57,60 @@
 		<result property="firstName" column="first_name"></result>
 		<result property="lastName" column="last_name"></result>
 	</resultMap>
-	<select id="empListResultMap" parameterType="string" resultMap="empMap2">
+	
+	
+	<!-- Param: basic -->
+	<!-- id: Dao의 method 이름을 나타낸다, param과 return 값도 맞춰야 한다. -->
+	<select id="empListResultMap2" parameterType="string" resultMap="empMap2">
 		select employeeId, first_name, last_name 
 		from emp 
+		where first_name like CONCAT('%', #{searchWord})
+	</select>
+	
+	<select id="empListResultMap" parameterType="string" resultMap="empMap">
+		select employeeId, first_name, last_name, email, hiredate 
+		from emp 
 		where first_name like CONCAT('%', #{searchWord}, '%')
+	</select>
+	
+	
+	<!-- Param: Map -->
+	<select id="empListParameterMap" parameterType="map" resultMap="empMap">
+		select employeeId, first_name, last_name 
+		from emp 
+		where first_name = #{firstName} and last_name = #{lastName}
+	</select>
+	
+	<!-- @Param -->
+	<select id="empListParameterMap2" parameterType="map" resultMap="empMap">
+		select employeeId, first_name, last_name 
+		from emp 
+		where first_name = #{firstName} and last_name = #{lastName}
+	</select>
+	
+	<!-- Param: Dto -->
+	<select id="empListParameterMap3" parameterType="map" resultMap="empMap">
+		select employeeId, first_name, last_name 
+		from emp 
+		where first_name = #{firstName} and last_name = #{lastName}
+	</select>
+	
+	
+	<!-- Dynamic SQL -->
+	<select id="empListWhereIf" parameterType="map" resultMap="empMap">
+		select employeeId, first_name, last_name, email, hiredate
+		from emp 
+		<where>
+			<if test="firstName != null">
+				first_name = #{firstName}
+			</if>
+			<if test="lastName != null">
+				and last_name = #{lastName}
+			</if>
+			<if test="email != null">
+				and email = #{email}
+			</if>
+		</where>
 	</select>
 </mapper>
 

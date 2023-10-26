@@ -23,6 +23,10 @@
 	<button id="btnEmpListLike" >Emp 목록 Like 검색</button>
 	<button id="btnEmpListResultMap" >Emp 목록 ResultMap</button>
 	
+	<button id="btnEmpListParameterMap" >Emp 목록 ParameterMap</button>
+	
+	<button id="btnEmpListWhereIf" >Emp 목록 Where If</button>
+	
 	
 </body>
 
@@ -168,6 +172,45 @@ window.onload = function() {
 			let searchWord = '동';
 			let url = '/mybatis/empListResultMap';
 			let urlParams = `?searchWord=\${searchWord}`;	// \를 줘야 JSP에서 EL문법이 아니라 JSP 문법임을 알 수 있다.
+			
+			let response = await fetch(url + urlParams);
+			let data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	
+	document.querySelector("#btnEmpListParameterMap").onclick = async function() {
+		try {
+			let firstName = '길동';
+			let lastName = "이";
+			
+			// let url = '/mybatis/empListParameterMap';
+			// let url = '/mybatis/empListParameterMap2';
+			let url = '/mybatis/empListParameterMap3';
+			let urlParams = `?firstName=\${firstName}&lastName=\${lastName}`;	// \를 줘야 JSP에서 EL문법이 아니라 JSP 문법임을 알 수 있다.
+			
+			let response = await fetch(url + urlParams);
+			let data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	
+	document.querySelector("#btnEmpListWhereIf").onclick = async function() {
+		try {
+			let firstName = '길동';
+			let lastName = "이";
+			let email = 'lee@gildong.com'
+			
+			let url = '/mybatis/empListWhereIf';
+			// Dynamic SQL 시도
+			let urlParams = `?lastName=\${lastName}`;	
+			//let urlParams = `?firstName=\${firstName}&lastName=\${lastName}`;	
+			//let urlParams = `?email=\${email}`;	
+			//let urlParams = `?firstName=\${firstName}&lastName=\${lastName}&email=\${email}`;
 			
 			let response = await fetch(url + urlParams);
 			let data = await response.json();

@@ -1,6 +1,7 @@
 package com.mycom.enjoytrip.user.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.mycom.enjoytrip.user.dto.UserDto;
 
@@ -11,7 +12,8 @@ public interface UserDao {
 	int userRegist(UserDto dto);
 	int userUpdate(UserDto dto);
 	UserDto userDetail(String userEmail);
-	UserDto userLogin(String userId, String userPwd);
-	void userLogout();
 	
+	
+	void userLogout();
+	UserDto userLogin(@Param("userEmail") String userEmail, @Param("userPwd") String userPwd);
 }
