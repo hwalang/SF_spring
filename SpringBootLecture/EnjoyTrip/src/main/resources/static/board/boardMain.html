@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>boardMain.html</h1>
+	
+	<button id="btnBoardDetail">board 상세</button>
+	<button id="btnBoardWrite">board 작성</button>
+	
+</body>
+<script>
+window.onload = async function() {
+	
+	try {
+		let response = await fetch('/boardList');
+		let list = await response.json();
+		
+		// js로 listHTML을 이용해서 HTML 파일에 list를 보여준다.
+		
+		console.log(list);
+	} catch (error) {
+		console.error(error);
+	}
+	
+	// board 상세 보기
+	document.querySelector("#btnBoardDetail").onclick = async function() {
+		try {
+			let response = await fetch('/boardDetail/1');
+			let data = await response.json();
+			// data: map이면 result가 success면 상세보기 페이지 window.location으로 이동
+			
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	
+}
+
+</script>
+</html>
