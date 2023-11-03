@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mycom.enjoytrip.dto.BoardDto;
 
+
 public interface BoardService {
 
 	List<BoardDto> boardList();					// 게시글 목록

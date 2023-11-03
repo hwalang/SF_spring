@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Emp Main</title>
+</head>
+<body>
+     <h1> Emp Main </h1>
+     
+     <button id ="btnEmpDetail">Emp 상세</button>
+     <button id ="btnEmpList">Emp 목록</button>
+     <button id ="btnEmpInsert">Emp 등록</button>
+     <button id ="btnEmpUpdate">Emp 수정</button>
+     <button id ="btnEmpDelete">Emp 삭제</button>
+
+     <button id ="btnEmpInsertJSON">Emp 등록 JSON</button>
+     
+<script>
+    window.onload = function() {
+        document.querySelector("#btnEmpDetail").onclick = async function() {
+            // 비동기 요청 가능
+            try {
+                let response = await fetch('/emps/2');
+                let data = await response.json();
+                // data로 이후 비동기 처리 결과 
+                console.log(data);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        
+        document.querySelector("#btnEmpList").onclick = async function() {
+            // 비동기 요청 가능
+            try {
+                let response = await fetch('/emps');
+                let data = await response.json();
+                // data로 이후 비동기 처리 결과 
+                console.log(data);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        
+     	// json insert
+        let empInsertData = {
+            employeeId : 4,
+            firstName : '길동',
+            lastName : '사',
+            email : 'sa@naver.com',
+            hireDate : '2023-04-04'
+        }
+        
+        document.querySelector("#btnEmpInsert").onclick = async function() {
+
+            let urlParams = new URLSearchParams({
+                employeeId : 4,
+                firstName : '길동',
+                lastName : '사',
+                email : 'oo@naver.com',
+                hireDate : '2023-05-05'
+            });
+            
+            let fetchOptions = {
+                method : 'POST',
+                body : urlParams
+            }
+            
+            try {
+                let response = await fetch('/emps', fetchOptions);
+                let data = await response.json();
+                // data로 이후 비동기 처리 결과 
+                console.log(data);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        
+        
+        let empUpdateData = {
+            employeeId : 4,
+            firstName : '길동씨',
+            lastName : '사',
+            email : 'oo@naver.com',
+            hireDate : '2023-05-05'
+        }
+        
+        // REST API: PUT
+        document.querySelector("#btnEmpUpdate").onclick = async function() {
+          
+            let fetchOptions = {
+                method : 'PUT',
+                body : new URLSearchParams(empUpdateData)
+            }
+            
+            try {
+                let response = await fetch('/emps/4', fetchOptions);
+                let data = await response.json();
+                // data로 이후 비동기 처리 결과 
+                console.log(data);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        
+        // REST API: DELETE
+        document.querySelector("#btnEmpDelete").onclick = async function() {
+        	
+        	let fetchOptions = {
+                method : 'DELETE'
+            }
+        	
+            try {
+                let response = await fetch('/emps/4', fetchOptions);
+                let data = await response.json();
+                // data로 이후 비동기 처리 결과 
+                console.log(data);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        
+        document.querySelector("#btnEmpInsertJSON").onclick = async function() {
+            // 비동기 요청 가능
+            let fetchOptions = {
+                method : 'POST',
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				body : JSON.stringify(empInsertData)
+            }
+            
+            try {
+                let response = await fetch('/empInsertJSON', fetchOptions);
+                let data = await response.json();
+                // data로 이후 비동기 처리 결과 
+                console.log(data);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        
+    }
+</script>
+</body>
+</html>

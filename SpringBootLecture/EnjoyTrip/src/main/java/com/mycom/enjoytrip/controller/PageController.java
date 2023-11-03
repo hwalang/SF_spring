@@ -1,6 +1,9 @@
 package com.mycom.enjoytrip.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 // 페이지 이동, 비동기 통신 controller를 각각 만들어야 한다.
@@ -10,42 +13,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
 	// 메인 화면
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String index() {
 		return "/index.html";
 	}
 	
 	// 로그인, 회원가입, 마이( 내정보, 수정, 탈퇴, 북마크 )
-	@RequestMapping("/regist")
+	@GetMapping("/goRegist")
 	public String regist() {
 		return "/regist.html";
 	}
-	@RequestMapping("/login")
+	@GetMapping("/goLogin")
 	public String login() {
+		
 		return "/login.html";
 	}
-	@RequestMapping("/mypage")
+	@GetMapping("/goLogout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "/index.html";
+	}
+	
+	
+	@GetMapping("/goMypage")
 	public String mypage() {
 		return "/mypage.html";
 	}
 	
 	
 	// 게시판 목록, 글 작성( + 수정 ), 글 상세
-	@RequestMapping("/boardMain")
+	@GetMapping("/goBoardMain")
 	public String boardMain() {
 		return "/board/boardMain.html";
 	}
-	@RequestMapping("/boardWrite")
+	@GetMapping("/goBoardWrite")
 	public String boardWrite() {
 		return "/board/boardWrite.html";
 	}
-	@RequestMapping("/boardDetail")
+	@GetMapping("/goBoardDetail")
 	public String boardDetail() {
 		return "/board/boardDetail.html";
 	}
 	
 	// 지도 페이지
-	@RequestMapping("/map")
+	@GetMapping("/goMap")
 	public String map() {
 		return "/map/map.html";
 	}

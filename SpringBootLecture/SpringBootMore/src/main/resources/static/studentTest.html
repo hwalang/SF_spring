@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Student 관리</h1>
+	<hr>
+	
+	<table>
+		<thead>
+			<tr><td>StudentID</td><td>StudentNm</td><td>Email</td><td>Phone</td></tr>
+		</thead>
+		<tbody id="tbodyStudent">
+			
+		</tbody>
+	</table>
+	<hr>
+	
+	<form>
+		<table>
+			<tbody>
+				<tr><td>StudentNm</td><td><input type="text" name="studentNm" id="inputStudentNm"></td></tr>
+				<tr><td>Email</td><td><input type="text" name="email" id="inputEmail"></td></tr>
+				<tr><td>Phone</td><td><input type="text" name="phone" id="inputPhone"></td></tr>
+			</tbody>
+		</table>
+	</form>
+	
+	<div style="border: 1px; margin: auto; text-align: center;">
+		<button id="btnInsert">등록</button>
+		<button id="btnUpdate">수정</button>
+		<button id="btnDelete">삭제</button>
+		<button id="btnClear">초기화</button>
+	</div>
+	
+<script>
+var CURRENT_ID;		// 현재 조회되는 studentId
+
+window.onload = function() {
+	
+	listStudent();
+	
+	// button event handler
+	document.querySelector("#btnInsert").onclick = insertStudent;
+	document.querySelector("#btnUpdate").onclick = updateStudent;
+	document.querySelector("#btnDelete").onclick = deleteStudent;
+	document.querySelector("#btnClear").onclick = clear;
+}
+
+async function listStudent() {
+	try {
+        let response = await fetch('/students');
+        let data = await response.json();
+        console.log(data);
+        makeListHtml(data);
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+function makeListHtml(list) {
+	let listHtml = ``;
+	list.forEach( el => {
+		// data-: 특정한 column이 아닌 모든 column을 클릭해도, 즉 <tr> tag를 클릭하면 studentId 값을 조작할 수 있다.
+		listHtml += `<tr style="cursor: pointer;" data-studentId=${el.studentId}><td>${el.studentId}</td><td>${el.studentNm}</td><td>${el.email}</td><td>${el.phone}</td></tr>`
+	});
+	
+	document.querySelector("#tbodyStudent").innerHTML = listHtml;
+	
+	makeListHtmlEventHandler();
+}
+
+function makeListHtmlEventHandler() {
+	// tbodyStudent의 자식들 중 모든 <tr> tag를 선택
+	document.querySelectorAll("#tbodyStudent tr").forEach( el => {
+		el.onclick = function() {
+			// this: 현재 클릭한 <tr> tag
+			let studentId = this.getAttribute("data-studentId");
+			detailStudent(studentId);
+		}
+	})
+}
+
+async function detailStudent(studentId) {
+	
+	// detail에 접근
+	let url = `/students/${studentId}`
+	
+	try {
+        let response = await fetch(url);
+        let data = await response.json();
+        console.log(data);
+        makeDetailHtml(data);
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+// <input> tag에 선택한 StudentDto를 넣는다.
+function makeDetailHtml(detail) {
+	
+	CURRENT_ID = detail.studentId;
+	document.querySelector("#inputStudentNm").value = detail.studentNm;
+	document.querySelector("#inputEmail").value = detail.email;
+	document.querySelector("#inputPhone").value = detail.phone;
+	
+}
+
+async function insertStudent() {
+	
+	let student = {
+		studentNm : document.querySelector("#inputStudentNm").value,
+		email : document.querySelector("#inputEmail").value,
+		phone : document.querySelector("#inputPhone").value
+	}
+	
+	// POST 방식에서 BODY를 www-urlencoded 로 보내기 위해서 URLSearchParams 객체를 생성
+	// BODY에서 URLSearchParams 과 form-data 방식을 구분해야 한다.
+	let urlParams = new URLSearchParams(student);
+	let fetchOptions = {
+		method: 'POST',
+		body: urlParams
+	}
+	
+	try {
+        let response = await fetch("/students", fetchOptions);
+        let data = await response.json();
+        console.log(data);
+        
+        listStudent();		// 화면 새로고침
+        clear();			// input 초기화
+    } catch(error) {
+        console.error(error);
+    }
+	
+}
+
+async function updateStudent() {
+	
+		let student = {
+			studentId : CURRENT_ID,
+			studentNm : document.querySelector("#inputStudentNm").value,
+			email : document.querySelector("#inputEmail").value,
+			phone : document.querySelector("#inputPhone").value
+		}
+		
+		// PUT 방식
+		let urlParams = new URLSearchParams(student);
+		let fetchOptions = {
+			method: 'PUT',
+			body: urlParams
+		}
+		
+		let url = `/students/${CURRENT_ID}`
+		
+		try {
+	        let response = await fetch(url, fetchOptions);
+	        let data = await response.json();
+	        console.log(data);
+	        
+	        listStudent();		// 화면 새로고침
+	        clear();			// input 초기화
+	    } catch(error) {
+	        console.error(error);
+	    }
+}
+
+async function deleteStudent() {
+	
+		let fetchOptions = {
+			method: 'DELETE',
+		}
+		
+		let url = `/students/${CURRENT_ID}`
+		
+		try {
+	        let response = await fetch(url, fetchOptions);
+	        let data = await response.json();
+	        console.log(data);
+	        
+	        listStudent();		// 화면 새로고침
+	        clear();			// input 초기화
+	    } catch(error) {
+	        console.error(error);
+	    }
+}
+
+function clear() {
+	
+	document.querySelector("#inputStudentNm").value = "";
+	document.querySelector("#inputEmail").value = "";
+	document.querySelector("#inputPhone").value = "";
+}
+
+
+</script>
+
+</body>
+</html>

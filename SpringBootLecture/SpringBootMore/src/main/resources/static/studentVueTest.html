@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Student 관리</h1>
+      <hr />
+
+      <table>
+        <thead>
+          <tr>
+            <td>StudentID</td>
+            <td>StudentNm</td>
+            <td>Email</td>
+            <td>Phone</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(student, index) in studentList" v-bind:key="index" @click="detail(student.studentId)">
+            <td>{{student.studentId}}</td>
+            <td>{{student.studentNm}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.phone}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+
+      <!-- <form>
+		<table>
+			<tbody>
+				<tr><td>StudentNm</td><td><input type="text" name="studentNm" id="inputStudentNm"></td></tr>
+				<tr><td>Email</td><td><input type="text" name="email" id="inputEmail"></td></tr>
+				<tr><td>Phone</td><td><input type="text" name="phone" id="inputPhone"></td></tr>
+			</tbody>
+		</table>
+	</form>
+	
+	<div style="border: 1px; margin: auto; text-align: center;">
+		<button id="btnInsert">등록</button>
+		<button id="btnUpdate">수정</button>
+		<button id="btnDelete">삭제</button>
+		<button id="btnClear">초기화</button>
+	</div> -->
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp, ref } = Vue;
+
+      createApp({
+        setup() {
+          const studentList = ref([]); // empty list
+
+          const list = async () => {
+            try {
+              let response = await fetch("/students");
+              let data = await response.json();
+              studentList.value = data;
+            } catch (error) {
+              console.error(error);
+            }
+          };
+
+          const detail = function (studentId) {
+            alert(studentId);
+          };
+
+          list(); // 데이터 가져오기
+
+          return {
+            studentList,
+            detail,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
