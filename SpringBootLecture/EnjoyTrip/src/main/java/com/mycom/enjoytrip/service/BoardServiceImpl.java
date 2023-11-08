@@ -12,28 +12,32 @@ import com.mycom.enjoytrip.dto.BoardDto;
 public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
-	BoardDao boardDao;
+	BoardDao dao;
 
 	@Override
 	public List<BoardDto> boardList() {
-		return boardDao.boardList();
+		return dao.boardList();
 	}
 
 	@Override
 	public BoardDto boardDetail(int boardId) {
-		BoardDto dto = boardDao.boardDetail(boardId);
-		return dto;
+		return dao.boardDetail(boardId);
 	}
 
 	@Override
 	public int boardWrite(BoardDto dto) {
-		return 0;
+		return dao.boardWrite(dto);
+	}
+
+	@Override
+	public int boardEdit(BoardDto dto) {
+		return dao.boardEdit(dto);
 	}
 
 	@Override
 	public int boardDelete(int boardId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.boardDelete(boardId);
 	}
+
 
 }

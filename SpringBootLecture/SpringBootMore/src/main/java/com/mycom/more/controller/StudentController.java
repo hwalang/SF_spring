@@ -15,7 +15,7 @@ import com.mycom.more.dto.StudentDto;
 import com.mycom.more.service.StudentService;
 
 @RestController
-// @CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins="*", allowedHeaders="*")
 public class StudentController {
 
 	@Autowired

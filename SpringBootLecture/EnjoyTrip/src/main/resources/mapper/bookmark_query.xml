@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycom.enjoytrip.dao.BookmarkDao">
+
+	<insert id="bookmarkInsert" parameterType="map">
+		insert into bookmarks (userId, contentId) values (#{userId}, #{contentId})
+	</insert>
+	
+	<delete id="bookmarkDelete" parameterType="map">
+		delete from bookmarks
+		 where userId = #{userId} and contentId = #{contentId}
+	</delete>
+	
+	<select id="bookmarkList" resultType="com.mycom.enjoytrip.dto.BookmarkDto" parameterType="int">
+		select b.bookmarkId, b.contentId, b.userId
+		  from bookmarks b, users u
+		 where b.userId = u.userId and u.userId = #{userId}
+	</select>
+</mapper>

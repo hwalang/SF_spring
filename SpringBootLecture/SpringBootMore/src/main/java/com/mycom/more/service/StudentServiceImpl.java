@@ -28,9 +28,6 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	@Transactional
 	public int insert(StudentDto dto) {
-		studentDao.insert(dto);
-		String str = null;
-		str.length();
 		return studentDao.insert(dto);
 	}
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycom.enjoytrip.dao.BoardDao">
+	
+    <select id="boardList" resultType="com.mycom.enjoytrip.dto.BoardDto">
+        select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardViewCnt, b.userId, u.userNm 
+          from board b 
+         inner join users u 
+            on u.userId = b.userId
+    </select>
+    
+    <select id="boardDetail" parameterType="int"
+        resultType="com.mycom.enjoytrip.dto.BoardDto">
+        select b.boardId, b.boardTitle, b.boardContent, b.boardRegDate, b.boardLike, b.boardViewCnt, b.userId, u.userNm, u.userProfile 
+          from board b, users u 
+         where b.boardId = #{boardId} 
+           and u.userId = b.userId 
+    </select>
+    
+    <insert id="boardWrite"
+        parameterType="com.mycom.enjoytrip.dto.BoardDto">
+        insert into board (boardTitle, boardContent, userId) 
+        values (#{boardTitle}, #{boardContent}, #{userId})
+    </insert>
+
+    <update id="boardEdit"
+        parameterType="com.mycom.enjoytrip.dto.BoardDto">
+        update board
+           set boardTitle = #{boardTitle}, boardContent = #{boardContent}
+         where boardId = #{boardId} 
+    </update>
+
+    <delete id="boardDelete" parameterType="int">
+        delete from board
+         where boardId = #{boardId} 
+    </delete>
+</mapper>

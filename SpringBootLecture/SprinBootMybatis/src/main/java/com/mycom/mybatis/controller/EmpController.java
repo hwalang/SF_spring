@@ -4,18 +4,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycom.mybatis.dto.EmpDto;
 import com.mycom.mybatis.service.EmpService;
 
 @RestController
+@RequestMapping("axios")
+@CrossOrigin(origins="*", allowedHeaders="*")
 public class EmpController {
 
 //	@Autowired
@@ -51,7 +55,7 @@ public class EmpController {
 	
 	// 사원 등록
 	@PostMapping(value = "/emps")
-	public Map<String, String> empInsert(EmpDto empDto) {
+	public Map<String, String> empInsert(@RequestBody EmpDto empDto) {
 		int ret = service.empInsert(empDto);
 		Map<String, String> map = new HashMap<>();
 		if (ret == 1) {
@@ -64,7 +68,7 @@ public class EmpController {
 	
 	// 사원 수정
 	@PutMapping(value = "/emps/{employeeId}")
-	public Map<String, String> empUpdate(@PathVariable int employeeId, EmpDto empDto) {
+	public Map<String, String> empUpdate(@PathVariable int employeeId, @RequestBody EmpDto empDto) {
 		int ret = service.empUpdate(empDto);
 		Map<String, String> map = new HashMap<>();
 		if (ret == 1) {

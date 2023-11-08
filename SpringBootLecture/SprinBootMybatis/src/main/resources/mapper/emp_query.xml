@@ -17,9 +17,9 @@
     <!-- return 이 primitive 이면 별도 기술 X -->
     <insert id="empInsert"
         parameterType="com.mycom.mybatis.dto.EmpDto">
-        insert into emp (employeeId, first_name, last_name,
+        insert into emp (first_name, last_name,
         email, hiredate)
-        values( #{employeeId}, #{firstName}, #{lastName},
+        values( #{firstName}, #{lastName},
         #{email}, #{hireDate})
     </insert>
 

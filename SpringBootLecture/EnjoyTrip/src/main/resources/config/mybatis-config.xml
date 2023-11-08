@@ -10,5 +10,7 @@
 	<mappers>
 		<mapper resource="mapper/user_query.xml"/>
 		<mapper resource="mapper/attraction_query.xml"/>
+		<mapper resource="mapper/board_query.xml"/>
+		<mapper resource="mapper/bookmark_query.xml"/>
 	</mappers>
 </configuration>
