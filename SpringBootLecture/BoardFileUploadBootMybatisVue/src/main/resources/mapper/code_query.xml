@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycom.myboard.code.dao.CodeDao">
+    <!-- user_profile_image_url: default 값으로 noProfile image를 사용 -->
+    <select id="codeList" parameterType="string" resultType="com.mycom.myboard.code.dto.CodeDto">
+        select code, code_name
+         from code
+         where group_code = #{groupCode}
+    </select>
+    
+</mapper>
