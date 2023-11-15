@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycom.myboard.user.dao.UserDao">
     <!-- user_profile_image_url: default 값으로 noProfile image를 사용 -->
-    <insert id="userRegister"
-        parameterType="com.mycom.myboard.user.dao.UserDao">
+    <insert id="userRegister" parameterType="com.mycom.myboard.user.dto.UserDto">
         insert into users ( user_name, user_password, user_email, user_register_date, user_clsf )
          values( #{userName}, #{userPassword}, #{userEmail}, now(), #{userClsf})
     </insert>
