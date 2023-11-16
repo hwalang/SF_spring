@@ -17,7 +17,7 @@ public class BoardFileDto {
 	
 	private int fileId;
 	private int boardId;
-	private String fileNaem;
+	private String fileName;
 	private long fileSize;
 	private String fileContentType;
 	private String fileUrl;

@@ -3,13 +3,27 @@
 <mapper namespace="com.mycom.myboard.board.dao.BoardDao">
 
 	<!-- 복수개의 파라미터가 필요한 경우 map -->
-    <select id="boardList" parameterType="map" resultType="com.mycom.myboard.board.dto.BoardDto">
-		select b.board_id, b.user_seq, u.user_name, u.user_profile_image_url, 
-			   b.title, b.content, b.reg_dt, b.read_count
-      	 from board b, users u
-    	 where b.user_seq = u.user_seq
-     	 order by b.board_id desc
-     	 limit #{limit} offset #{offset} 
-    </select>
-    
+	<select id="boardList" parameterType="map"
+		resultType="com.mycom.myboard.board.dto.BoardDto">
+		select b.board_id, b.user_seq, u.user_name,
+		u.user_profile_image_url,
+		b.title, b.content, b.reg_dt, b.read_count
+		from board b, users u
+		where b.user_seq = u.user_seq
+		order by b.board_id desc
+		limit #{limit} offset #{offset}
+	</select>
+
+	<insert id="boardInsert" parameterType="com.mycom.myboard.board.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardId">
+		INSERT INTO BOARD ( USER_SEQ, TITLE, CONTENT, REG_DT, READ_COUNT )
+		VALUES ( #{userSeq}, #{title}, #{content}, now(), 0 )
+	</insert>
+
+	<insert id="boardFileInsert" parameterType="com.mycom.myboard.board.dto.BoardFileDto">
+		INSERT INTO BOARD_FILE ( BOARD_ID, FILE_NAME, FILE_SIZE, FILE_CONTENT_TYPE,
+		FILE_URL )
+		VALUES ( #{boardId}, #{fileName}, #{fileSize}, #{fileContentType},
+		#{fileUrl} )
+	</insert>
+
 </mapper>
