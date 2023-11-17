@@ -12,23 +12,24 @@ import com.mycom.myboard.common.LoginInterceptor;
 public class WebMvcConfig implements WebMvcConfigurer {
 	
 	@Autowired
-	LoginInterceptor loginInterceptor;
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loginInterceptor)
-				.addPathPatterns("/**")				// 모든 경로에 적용한다.
-				.excludePathPatterns(				// 적용하지 않는 경로
-						"/",
-						"/login/**",
-						"/users/**",				// 회원가입
-						"/codes/**",				// 공통 코드
-						"/css/**",
-						"/js/**",
-						"/img/**",
-						"/favicon.ico"
-				);	
-	}
+    private LoginInterceptor loginInterceptor;
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor)
+        .addPathPatterns("/**")
+        .excludePathPatterns(
+            "/",
+            "/index.html",
+            "/favicon.ico",
+            "/login/**",
+            "/users/**",
+            "/codes/**",
+            "/css/**",
+            "/js/**",
+            "/img/**"
+        );
+    }
 	
 	// CORS 에러 방지
 	// @CrossOrigin(origins="*", allowedHeaders="*") 역할

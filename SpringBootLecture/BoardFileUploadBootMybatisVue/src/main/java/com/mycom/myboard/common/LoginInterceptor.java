@@ -18,19 +18,24 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	// DispatcherServlet에서 Controller로 들어가기 전에 호출 -> 로그인 체크
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		System.out.println("LoginInterceptor >>> " + request.getRequestURI());
-		
-		// JSP를 사용하지 않기 때문에 비동기 처리만 하면 된다.
-		HttpSession session = request.getSession();
-		UserDto userDto = (UserDto) session.getAttribute("userDto");
-		
-		if (userDto == null) {
-			// login이 필요하다는 응답을 보내준다.
-			response.getWriter().write(jsonStr);
-			return false;		// 통과 불가
-		}
-		
-		return true;
+        // exclude 요청에는 아래 출력 X
+        System.out.println("LoginInterceptor >>>> " + request.getRequestURI());
+        System.out.println(handler);
+        
+        // CORS 에서  put, delete 등 오류 해결 코드
+        if (request.getMethod().equals("OPTIONS")) {
+            return true;
+        }
+        
+        HttpSession session = request.getSession();
+        UserDto userDto = (UserDto) session.getAttribute("userDto");
+
+        if( userDto == null ) {
+            response.getWriter().write(jsonStr);            
+            return false;
+        }
+
+        return true;
 	}
 	
 	// 이제 어디에 적용할 건지 정해주면 된다.

@@ -17,24 +17,22 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BoardDto {
-
-	private int boardId;
-	private int userSeq;
-	private String userName;
-	private String userProfileImageUrl;
-	private String title;
-	private String content;
-	private LocalDateTime regDt;	// LocalDateTime: java-8 이상
-	private int readCount;
-	private boolean sameUser;
-	
-	// 첨부파일
-	private List<BoardFileDto> fileList;
-	
-	// regDt setter
-	// lombok + mybatis mapping 충돌 방지
-	// mybatis는 DateTime만 가능하다.
-	public void setRegDt(Date regDt) {
-		this.regDt = LocalDateTime.ofInstant(regDt.toInstant(), ZoneId.systemDefault());
-	}
+    private int boardId;
+    private int userSeq;
+    private String userName;
+    private String userProfileImageUrl;
+    private String title;
+    private String content;
+    private LocalDateTime regDt; // java 8
+    private int readCount;
+    private boolean sameUser;
+    
+    // 첨부파일들
+    private List<BoardFileDto> fileList;
+    
+    // regDt setter
+    public void setRegDt(Date regDt) {
+        // lombok + mybatis mapping 충돌 방지
+        this.regDt = LocalDateTime.ofInstant(regDt.toInstant(), ZoneId.systemDefault());        
+    }
 }
